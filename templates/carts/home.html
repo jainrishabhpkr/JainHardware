@@ -1,0 +1,48 @@
+{% extends 'base.html'%}
+{%block content%}
+<h1>Cart</h1>
+{% if cart.products.exists%}
+<table class="table">
+
+
+<thead>
+  <th>#</th>
+  <th>Product name</th>
+  <th>Product price</th>
+</thead>
+<tbody>
+  {%for product in cart.products.all%}
+  <tr>
+    <th scope="row">{{forloop.counter}}</th>
+    <td><a href="{{product.get_absolute_url}}">{{product.title}}</a>
+    <!-- form for remove -->
+    <form  method="POST" action="{%url 'carts:update'%}" class="form ">
+      {%csrf_token%}
+      <input type="hidden" name="product_id" value="{{product.id}}">
+
+        <button type="submit" name="button"  style="padding:0px;" class="btn btn-link btn-sm">Remove?</button>
+
+      </form>
+      <!-- endofform -->
+       </td>
+    <td>{{product.price}}</td>
+  </tr>
+  {%endfor%}
+  <tr>
+    <td colspan="2"></td>
+    <td><b>Subtotal</b> {{cart.subtotal}}</td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+    <td><b>Total</b> {{cart.total}}</td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+    <td><a class="btn btn-lg btn-success" href="{%url 'carts:checkout'%}">Checkout</a></td>
+  </tr>
+</tbody>
+</table>
+{%else%}
+<p class="lead">cart is empty</p>
+{%endif%}
+{%endblock%}

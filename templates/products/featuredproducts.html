@@ -1,0 +1,11 @@
+{%extends 'base.html'%}
+{%block content%}
+<h1>List of Products</h1>
+<hr>
+{%for product in product_list%}
+<h3><a href="{%url 'featuredproduct' product.id%}">{{product.title}}</a></h3>  <br>
+<img src="{{product.photo.url}}" alt="">
+
+{%endfor%}
+{{bat}}
+{%endblock%}

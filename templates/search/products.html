@@ -1,0 +1,64 @@
+{%extends 'base.html'%}
+{%block content%}
+<!-- <h1>List of Products</h1>
+<hr> -->
+<!-- %url 'product' product.id% -->
+
+<div class="row mb-3">
+  {% if query%}
+     <div class="col-12 ">
+       Results for <b>{{query}}</b>
+       <hr>
+     </div>
+   {%else%}
+   <div class="col-12 col-md-8 mx-auto py-4">
+     <form  method="GET" action="{%url 'searchproducts'%}" class="form my-2 my-lg-0">
+       <div class="input-group">
+         <input class="form-control " type="search" name="q" placeholder="Search" aria-label="Search">
+         <span class="input-group-btn">
+         <button class="btn btn-outline-success " type="submit">Search</button>
+         </span>
+       </div>
+       </form>
+
+       </div>
+
+   </div>
+   <div class="col-12">
+     <hr>
+   </div>
+
+   {%endif%}
+</div>
+
+
+
+
+<div class="container">
+  <div class="row">
+
+
+{%for product in product_list%}
+    <div class="col">
+
+
+      {% include 'products/snippets/card.html' with instance=product%}
+      {%if forloop.counter|divisibleby:3%}
+    </div></div><div class="row"><div class="col-12">
+      <hr>
+    </div>
+
+
+    {%else%}
+    </div>
+    {%endif%}
+    {%endfor%}
+  </div>
+</div>
+
+
+
+
+
+
+{%endblock%}

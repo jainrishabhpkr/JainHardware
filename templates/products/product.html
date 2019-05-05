@@ -1,0 +1,38 @@
+{%extends 'base.html'%}
+{%block content%}
+<h1>Detail of Products</h1>
+<hr>
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <h1>{{product.title}}</h1><br>
+      {{product.timestamp|timesince}} ago
+      {{product.description|linebreaks}}<br>
+      {{product.price}}<br>
+      {%if product.photo%}
+      <img src="{{product.photo.url}}" alt="">
+      {%endif%}
+    </div>
+    <div class="col-12 col-md-6">
+      <form  method="POST" action="{%url 'carts:update'%}" class="form ">
+        {%csrf_token%}
+        <input type="hidden" name="product_id" value="{{product.id}}">
+        {% if product in cart.products.all%}
+        In Cart <button type="submit" name="button" class="btn btn-link">Remove?</button>
+        {%else%}
+        add to cart  <button type="submit" class="btn btn-success" name="button">Add to cart</button>
+        {%endif%}
+        </form>
+
+      <!-- {{cart}} -->
+      <!-- {% if product in cart.products.all%}
+      In Cart <button type="button" name="button" class="btn btn-link">Remove?</button>
+      {%else%}
+      Add to cart <button type="button" class="btn btn-success" name="button">Add to cart</button>
+      {%endif%} -->
+    </div>
+
+  </div>
+</div>
+
+{%endblock%}

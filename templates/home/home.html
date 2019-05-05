@@ -1,0 +1,13 @@
+{%extends 'base.html'%}
+{% block content%}
+<h1>HOme page</h1>
+<h1>whats your name</h1>
+<h2>{{apple}}</h2>
+
+{%if request.user.is_authenticated%}
+<h1>premium</h1><hr>
+{{premium}}
+{%endif%}
+
+
+{%endblock%}

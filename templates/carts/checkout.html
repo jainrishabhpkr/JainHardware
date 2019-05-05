@@ -1,0 +1,43 @@
+{%extends 'base.html'%}
+{%url 'guest_register' as guest_register_url%}
+{%block content%}
+
+<h1>Checkout</h1>
+
+{%if not billing_profile%}
+<div class="row text-center">
+  <div class="col-12 col-md-6">
+    <p>login</p>
+    <form  method="POST" action="{%url 'accounts:login'%}">
+      {% if request.build_absolute_uri%}
+      <input type="hidden" name="next" value="{{request.build_absolute_uri}}">
+      {%endif%}
+
+      {% csrf_token%}
+      {{form}}
+      <button type="submit"  class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+  <div class="col-12 col-md-6">
+    <p>continue as guest</p>
+    <!-- {%if guest_register_url%}{{guest_register_url}}{%else%}{%url 'accounts:login'%}{%endif%}   -->
+    <form  method="POST" action="{%url 'accounts:guest_register'%}">
+      {% if request.build_absolute_uri%}
+      <input type="hidden" name="next" value="{{request.build_absolute_uri}}">
+      {%endif%}
+
+      {% csrf_token%}
+      {{guest_form}}
+      <button type="submit"  class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
+
+{%else%}
+<p>cart total:-    {{object.cart.total}}</p>
+<p>shipping total :-    {{object.shippingtotal}}</p>
+<p>Order total :- {{object.total}}</p>
+
+{%endif%}
+
+{%endblock%}
